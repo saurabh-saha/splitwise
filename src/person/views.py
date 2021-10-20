@@ -3,19 +3,20 @@ from django.http import HttpResponse
 import json
 from .models import Person
 from .service import TransactionService, FriendService
-from .util import myconverter
+from .util import myconverter, ExtendedEncoder
 from django.db import connection
 # TODO Handle exception handling
 
 
 def register(request):
     data = json.loads(request.body.decode('utf-8'))
-    Person(
+    p = Person(
         first_name=data.get('first_name'),
         last_name=data.get('last_name'),
         email=data['email']
-    ).save()
-    return HttpResponse(status=201)
+    )
+    p.save()
+    return HttpResponse(json.dumps(p, cls=ExtendedEncoder),status=201)
 
 
 def expense(request, user_id):
