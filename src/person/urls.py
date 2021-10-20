@@ -6,5 +6,6 @@ urlpatterns = [
     path('register', views.register),
     path('expense/<int:user_id>', views.expense),
     path('friends/<int:user_id>', views.friends),
-    path('logs/<int:user_id>', views.logs)
+    path('logs/<int:user_id>', views.logs),
+    path('settle/<int:user_id>', views.settle)
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 import json
-from .models import Person
+from .models import Person, Transaction
 from .service import TransactionService, FriendService
 from .util import myconverter, ExtendedEncoder
 from django.db import connection
@@ -64,3 +64,27 @@ def logs(request, user_id):
     row = cursor.fetchall()
     print(row)
     return HttpResponse(json.dumps(row, default=myconverter), content_type="application/json")
+
+
+def settle(request, user_id):
+    data = json.loads(request.body.decode('utf-8'))
+    friend_id = data['friend_id']
+    settle_amount = data['amount']
+    user = get_object_or_404(Person, id=user_id)
+    friend = get_object_or_404(Person, id=friend_id)
+
+    if settle_amount > 0:
+        #user is getting money back
+        lender = friend
+        borrow = user
+    else:
+        lender = user
+        borrow = friend
+
+    Transaction(
+        lender=lender,
+        borrower=borrow,
+        amount=settle_amount,
+        user=user
+    ).save()
+    return HttpResponse(status=201)

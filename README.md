@@ -78,3 +78,15 @@ of transaction
 ```bash
 api/person/logs/user_id
 ```
+
+* Settle - Settles the expense, frontend will return the amount as returned from /friends API
+Positive amount means friend is returning money
+```bash
+api/person/settle/user_id
+
+Request
+{
+    "amount" : 4000,
+    "friend_id" : 5
+}
+```
