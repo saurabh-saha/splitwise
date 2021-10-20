@@ -14,6 +14,7 @@
 * python manage.py runserver
 
 ###API
+* POSTMAN -> COllection -> Import -> Link (Follow Sequence)
 * [POSTMAN LINK](https://www.getpostman.com/collections/01f7fb97e713f0670c3f)
 * Create User - [Register 2 -3 Users]
 ```bash
