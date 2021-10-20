@@ -14,7 +14,7 @@
 * python manage.py runserver
 
 ###API
-* [POSTMAN LINK](https://www.getpostman.com/collections/0e4e1f7bcdeaf96a1787)
+* [POSTMAN LINK](https://www.getpostman.com/collections/01f7fb97e713f0670c3f)
 * Create User - [Register 2 -3 Users]
 ```bash
 /api/person/register
