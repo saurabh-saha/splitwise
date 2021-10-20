@@ -2,12 +2,23 @@ from .models import Transaction
 from django.shortcuts import get_object_or_404
 from .models import Person
 from .schema import FriendSchema
+from django.db import connection
 
 class ExpenseTracker:
     def __init__(self, paid, share):
         self.paid = paid
         self.share = share
 
+class PersonService:
+    @staticmethod
+    def save(data):
+        p = Person(
+            first_name=data.get('first_name'),
+            last_name=data.get('last_name'),
+            email=data['email']
+        )
+        p.save()
+        return p
 
 class TransactionService:
     def __init__(self,user, lender, borrowers, amount, ptype, share=[]):
@@ -55,6 +66,32 @@ class TransactionService:
                 user=self.user
             ).save()
 
+    @staticmethod
+    def settle(user, friend, settle_amount):
+        if settle_amount > 0:
+            # user is getting money back
+            lender = friend
+            borrow = user
+        else:
+            lender = user
+            borrow = friend
+
+        Transaction(
+            lender=lender,
+            borrower=borrow,
+            amount=settle_amount,
+            user=user
+        ).save()
+
+    @staticmethod
+    def logs(user_id):
+        QUERY = '''
+            select created_at,sum(amount) from person_transaction where user_id = %s group by created_at;
+        '''
+        cursor = connection.cursor()
+        cursor.execute(QUERY, [user_id])
+        row = cursor.fetchall()
+        return row
 
 class FriendService:
     def __init__(self, user_id):
