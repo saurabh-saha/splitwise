@@ -3,11 +3,12 @@
 ###DB
 * psql --version
 * start [postgres](https://ooxygenated.wordpress.com/2021/02/19/start-local-postgres-server/)
+* vi scripts/run_db_command.sh  
 * source scripts/run_db_command.sh {edit credentials here}
 
 ###DJANGO
-* cd src
 * pip install -r requirements.txt
+* cd src
 * python manage.py makemigrations
 * python manage.py migrate
 * python manage.py runserver

@@ -11,6 +11,7 @@ class ExpenseTracker:
 
 class TransactionService:
     def __init__(self,user, lender, borrowers, amount, ptype, share=[]):
+        self.user = user
         self.creator = user
         self.lender = lender
         self.borrowers = borrowers

@@ -18,4 +18,4 @@ class Transaction(models.Model):
     borrower = models.ForeignKey('Person', on_delete=models.CASCADE,related_name='borrower')#models.IntegerField(null=False)
     amount = models.IntegerField(null=False)
     currency = models.CharField(default='INR',null=False,max_length=3)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.TimeField(auto_now_add=True)
